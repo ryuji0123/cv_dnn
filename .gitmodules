@@ -1,0 +1,3 @@
+[submodule "docker/settings"]
+	path = docker/settings
+	url = git@github.com:ryuji0123/settings.git
