@@ -1,9 +1,12 @@
 #!/bin/sh
+CONTAINER_NAME='cv_dnn'
+docker stop $CONTAINER_NAME
 docker run \
   -dit \
   --gpus all \
-  --name dnn\
+  --name $CONTAINER_NAME\
+  -p 6008:6008 \
   --rm \
   --shm-size=2gb \
-  -v ~/dnn:/workspace \
-  dnn zsh
+  -v ~/cv_dnn:/workspace \
+  cv_dnn zsh
