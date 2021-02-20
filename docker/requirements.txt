@@ -7,3 +7,4 @@ pytest==6.0.2
 scipy==1.5.2
 torch==1.7.0
 torchvision==0.8.1
+yacs==0.1.8
