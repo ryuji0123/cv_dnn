@@ -4,7 +4,7 @@ from os.path import join
 
 from config.const import PROJECT_ROOT
 
-def parse_arguments():
+def parseConsole():
     parser = argparse.ArgumentParser(description='Configuration for experiments')
     parser.add_argument('--args_file_path', type=str)
     parser.add_argument(

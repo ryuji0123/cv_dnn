@@ -1,6 +1,6 @@
 import torch
 
-from config import update_args, parse_arguments
+from config import updateArgs, parseConsole
 from criterion import getCriterion
 from data import getDataLoader
 from data.dataset import getDataset
@@ -44,8 +44,8 @@ def main(args, args_file_path, train_log_file_path):
             )
 
 if __name__ == '__main__':
-    option = parse_arguments()
-    args = update_args(cfg_file=option.cfg_file_path)
+    option = parseConsole()
+    args = updateArgs(cfg_file=option.cfg_file_path)
     fixSeed(args.SEED)
     main(args=args, args_file_path=option.args_file_path, 
             train_log_file_path=option.train_log_file_path

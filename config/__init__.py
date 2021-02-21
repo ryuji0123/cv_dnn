@@ -1,14 +1,14 @@
 import copy
 import os
 
-from config.parse_console import parse_arguments
+from config.parse_console import parseConsole
 from config.defaults import _C
 
 
 _C.__init__()
 
 
-def update_args(cfg_file=None):
+def updateArgs(cfg_file=None):
     _C.defrost()
     if cfg_file and os.path.exists(cfg_file):
         _C.merge_from_file(cfg_file)
@@ -17,4 +17,4 @@ def update_args(cfg_file=None):
     return copy.deepcopy(_C)
 
 
-__all__ = ['parse_arguments', 'update_args']
+__all__ = ['parseConsole', 'updateArgs']
