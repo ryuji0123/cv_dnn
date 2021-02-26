@@ -1,8 +1,7 @@
 # custom ignores
 mlruns/
-.arg/
-.log/
 .data/
+results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

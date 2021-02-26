@@ -1,15 +1,14 @@
 #!/bin/sh
 TIMESTAMP=`date +%Y-%m-%d_%H-%M-%S`
-ARG_DIR="$(pwd)/.arg"
-LOG_DIR="$(pwd)/.log"
-ARGS_FILE="${ARG_DIR}/${TIMESTAMP}.yaml"
-TRAIN_LOG_FILE="${LOG_DIR}/${TIMESTAMP}.txt"
-mkdir -p $ARG_DIR
-mkdir -p $LOG_DIR
+RESULTS_DIR="$(pwd)/results/${TIMESTAMP}"
+ARGS_FILE="${RESULTS_DIR}/args.yaml"
+TRAIN_LOG_FILE="${RESULTS_DIR}/log.txt"
+mkdir -p $RESULTS_DIR
 
 export CUDA_VISIBLE_DEVICES=3
 nohup python -u train.py \
   --args_file_path $ARGS_FILE \
   --train_log_file_path $TRAIN_LOG_FILE \
   >> $TRAIN_LOG_FILE &
+sleep 1s
 tail -f $TRAIN_LOG_FILE

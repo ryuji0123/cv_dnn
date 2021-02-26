@@ -27,7 +27,7 @@ class ParentTrainer:
                 print(args)
 
         with mlflow.start_run(experiment_id=getMlflowExperimentIdByName(experiment_name)):
-            mlflow.log_artifact(args_file_path, 'args.yaml')
+            mlflow.log_artifact(args_file_path)
             remove(args_file_path)
 
             best_val_acc = 0.0
@@ -60,7 +60,7 @@ class ParentTrainer:
                             )
                     best_val_acc = val_acc
             
-            mlflow.log_artifact(train_log_file_path, 'train_log.txt')
+            mlflow.log_artifact(train_log_file_path)
             remove(train_log_file_path)
 
     def train(self, criterion, device, model, optimizer, scheduler, train_data_loader):
