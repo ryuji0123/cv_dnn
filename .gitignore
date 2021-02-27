@@ -1,7 +1,8 @@
 # custom ignores
-mlruns/
 .data/
-results/
+lightning_logs/
+mlruns/
+.tmp_results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
