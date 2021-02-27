@@ -1,0 +1,2 @@
+MLFLOW:
+  EXPERIMENT_NAME: 'simple_cnn'

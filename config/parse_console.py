@@ -10,6 +10,7 @@ def parseConsole():
     parser.add_argument(
             '--cfg_file_path', type=str, default=join(PROJECT_ROOT, 'config', 'simple_cnn.yaml')
             )
+    parser.add_argument('--tmp_results_dir', type=str)
     parser.add_argument('--train_log_file_path', type=str)
     args = parser.parse_args()
     return args
