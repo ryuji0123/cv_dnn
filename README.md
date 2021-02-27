@@ -31,7 +31,8 @@ If you want to see train steps and its status with both stdout and mlflow, you c
 ### Models
 Define your own models and add keys. Also, if you want to pass model-dependent hyper parameters, you can add another if-else statement for each model.
 
-```get_model.py
+model/get_model.py
+```
 # add models
 from model.simple_cnn_model import SimpleCNNModel 
 
@@ -60,7 +61,8 @@ def getModel(args, device):
 
 Since we use Pytorch Lightning, models should inherit "LightningModule". 
 
-```simple_cnn_model.py
+model/simple_cnn_model.py
+```
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -127,7 +129,9 @@ class SimpleCNNModel(LightningModule):
 
 ### Dataset
 Define your dataset and add keys.
-```data/dataset/get_datatset.py
+
+data/dataset/get_datatset.py
+```
 # add datasets
 from data.dataset.cifer_10_dataset import CIFAR10Dataset 
 
@@ -152,7 +156,9 @@ def getDataset(args):
 
 ### DataLoader
 Define your own dataloader and add keys.
-```data/get_data_loader.py
+
+data/get_data_loader.py
+```
 # add data loader
 from torch.utils.data import DataLoader 
 
@@ -167,7 +173,9 @@ def getDataLoader(batch_size, dataset, sampler=None):
 
 ### Optimizer / Sceduler
 Define your own optimizer /  scheduler and add keys.
-```optim/get_optimizer.py
+
+optim/get_optimizer.py
+```
 from torch.optim import Adam, SGD # add optimizers
 
 
@@ -185,7 +193,8 @@ def getOptimizer(args, model):
     return optimizer
 ```
 
-```optim/get_scheduler.py
+optim/get_scheduler.py
+```
 from  torch.optim.lr_scheduler import StepLR # add schedulers
 
 
@@ -204,7 +213,8 @@ def getScheduler(args, optimizer):
 ### Configuration
 Currently, we support yacs as a configuration library. You can change default params and add your own configs in "config/defaults.py". Note that you cannot add parameters such as "_C.TRAIN.GPUS" in other files. All parameters should be defined in this file.
 
-```config/defaults.py
+config/defaults.py
+```
 from os.path import join
 
 from yacs.config import CfgNode
@@ -247,14 +257,16 @@ _C.DATA.VAL_SIZE = 0.25
 
 If you want to change parameters in each model or experiment, you can add your own yaml file. It updates specified parameters in itself. You can specify a yaml file with the command line argument. 
 
-```config/simple_cnn.yaml
+config/simple_cnn.yaml
+```
 MLFLOW:
   EXPERIMENT_NAME: 'simple_cnn'
 ```
 
 Also, you can add constant values in "config/const.py"
 
-```config/const.py
+config/const.py
+```
 from os import sep
 from os.path import join, dirname, realpath
 
@@ -265,7 +277,8 @@ PROJECT_ROOT = join(sep, *dirname(realpath(__file__)).split(sep)[: -1])
 Currently we support MLFlow as an experiment manager and use PyTorch Lightning as a trainer.
 Also, we offer logging stdout and saving config as mlflow's artifacts.
 
-```train.py
+train.py
+```
 from contextlib import redirect_stdout
 from shutil import rmtree
 
@@ -301,7 +314,8 @@ def main(args, args_file_path, tmp_results_dir, train_log_file_path):
 
 If you use above train-pipeline, please use "nohup_train.sh" or other similar shell scripts. "nohup_train.sh" uses nohup and some tips to run training steps in background. Once "train.py" started,  you can see stdout as usual and stop it without breaking train steps by just pressing ctrl+c.
 
-```nohup_train.sh
+nohup_train.sh
+```
 #!/bin/sh
 TIMESTAMP=`date +%Y-%m-%d_%H-%M-%S`
 TMP_RESULTS_DIR="$(pwd)/.tmp_results/${TIMESTAMP}"
