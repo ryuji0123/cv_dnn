@@ -4,7 +4,7 @@ FROM pytorch/pytorch
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && \
 		apt-get install -y \
-			curl libopencv-dev lsof git sudo tmux tree vim wget zsh && \
+			curl libopencv-dev lsof git sudo tmux tree vim wget && \
 		apt-get clean && \
 		rm -rf /var/lib/apt/lists/* && \
 		rm -rf /var/cache/apk/*
@@ -27,11 +27,3 @@ RUN addgroup --gid $GROUP_ID duser && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER duser
-ENV SETTING_PATH /duser/settings
-COPY docker/settings $SETTING_PATH
-WORKDIR $SETTING_PATH
-RUN $SETTING_PATH/setup.sh
-SHELL ["/bin/zsh", "-c"]
-
-# set git, tmux, vim, zsh
-WORKDIR $WORK_PATH

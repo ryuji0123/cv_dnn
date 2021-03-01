@@ -9,4 +9,4 @@ docker run \
   --rm \
   --shm-size=2gb \
   -v ~/cv_dnn:/workspace \
-  cv_dnn zsh
+  cv_dnn bash
