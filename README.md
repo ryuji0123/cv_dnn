@@ -171,7 +171,7 @@ def getDataLoader(batch_size, dataset, sampler=None):
             )
 ```
 
-### Optimizer / Sceduler
+### Optimizer / Scheduler
 Define your own optimizer /  scheduler and add keys.
 
 optim/get_optimizer.py
