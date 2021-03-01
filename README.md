@@ -1,4 +1,9 @@
 # Sample DNN Repository for Computer Vision
+## Dependency
+- Driver Version: 430.26
+- CUDA Version: 10.2
+- Docker version: 19.03.2
+
 ## Steps
 1. Install
 ```sh
