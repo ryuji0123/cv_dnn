@@ -1,5 +1,5 @@
 # Sample DNN Repository for Computer Vision
-## Dependency
+## Dependencies
 - Driver Version: 430.26
 - CUDA Version: 10.2
 - Docker version: 19.03.2
