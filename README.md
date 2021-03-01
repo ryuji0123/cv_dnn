@@ -23,7 +23,7 @@ $ ./exec_docker_container.sh
 ```sh
 $ ./nohup_train.sh
 ```
-If you want to stop seeing stdout without breaking train steps, you can just press ctrl+c. The above shell uses nohup and run python script in background, you don't pay attention to how to avoid intrupting train steps. See Logger & Trainer module in detail.
+If you want to stop seeing stdout without breaking train steps, you can just press ctrl+c. The above shell uses nohup and run python script in background, you don't pay attention to how to avoid intrupting train steps. See Logger / Trainer module in detail.
 
 5. See Results
 ```sh
@@ -278,7 +278,7 @@ from os.path import join, dirname, realpath
 PROJECT_ROOT = join(sep, *dirname(realpath(__file__)).split(sep)[: -1])
 ```
 
-### Logger & Trainer
+### Logger / Trainer
 Currently we support MLFlow as an experiment manager and use PyTorch Lightning as a trainer.
 Also, we offer logging stdout and saving config as mlflow's artifacts.
 
