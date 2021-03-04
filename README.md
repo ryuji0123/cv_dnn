@@ -263,7 +263,7 @@ _C.DATA.VAL_SIZE = 0.25
 If you want to change parameters in each model or experiment, you can add your own yaml file. It updates specified parameters in itself. You can specify a yaml file with the command line argument. 
 
 config/simple_cnn.yaml
-```
+```yaml
 MLFLOW:
   EXPERIMENT_NAME: 'simple_cnn'
 ```
@@ -320,7 +320,7 @@ def main(args, args_file_path, tmp_results_dir, train_log_file_path):
 If you use above train-pipeline, please use "nohup_train.sh" or other similar shell scripts. "nohup_train.sh" uses nohup and some tips to run training steps in background. Once "train.py" started,  you can see stdout as usual and stop it without breaking train steps by just pressing ctrl+c.
 
 nohup_train.sh
-```
+```sh
 #!/bin/sh
 TIMESTAMP=`date +%Y-%m-%d_%H-%M-%S`
 TMP_RESULTS_DIR="$(pwd)/.tmp_results/${TIMESTAMP}"
@@ -341,7 +341,7 @@ tail -f $TRAIN_LOG_FILE
 
 After training process started, it can be seen on mlflow's application. You can use existing shell script:
 
-```cv_dnn/
+```sh
 $ ./app_ml.sh
 ```
 
@@ -350,18 +350,18 @@ Then, please check  localhost:6008 on your web browser.
 ### Docker
 There are three steps to create your own docker environment.
 - Build docker image. You can use existing shell script:
-```cv_dnn/
+```sh
 $ ./build_docker_image.sh
 ```
 Since default user in docker container is root user, user_id and group_id in docker are different from them in host OS. This causes permission problems if you generate files in docker container. To fix this problem, we create duser (docker user). It has the same user_id and group_id with them in host OS, so if you write or edit files, you can access the same files in host OS. Also, duer can use sodo command in docker container without a password, so you don't have to pay attention to settings when you want to install libraries.
 
 - Run docker container. You can use existing shell script:
-```cv_dnn/
+```sh
 $ ./run_docker_container.sh
 ```
 
 - Exec docker container. You can use existing shell script:
-```cv_dnn/
+```sh
 $ ./exec_docker_container.sh
 ```
 
