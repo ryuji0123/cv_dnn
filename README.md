@@ -37,7 +37,7 @@ If you want to see train steps and its status with both stdout and mlflow, you c
 Define your own models and add keys. Also, if you want to pass model-dependent hyper parameters, you can add another if-else statement for each model.
 
 model/get_model.py
-```
+```py
 # add models
 from model.simple_cnn_model import SimpleCNNModel 
 
@@ -67,7 +67,7 @@ def getModel(args, device):
 Since we use Pytorch Lightning, models should inherit "LightningModule". 
 
 model/simple_cnn_model.py
-```
+```py
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -136,7 +136,7 @@ class SimpleCNNModel(LightningModule):
 Define your dataset and add keys.
 
 data/dataset/get_datatset.py
-```
+```py
 # add datasets
 from data.dataset.cifer_10_dataset import CIFAR10Dataset 
 
@@ -163,7 +163,7 @@ def getDataset(args):
 Define your own dataloader and add keys.
 
 data/get_data_loader.py
-```
+```py
 # add data loader
 from torch.utils.data import DataLoader 
 
@@ -180,7 +180,7 @@ def getDataLoader(batch_size, dataset, sampler=None):
 Define your own optimizer /  scheduler and add keys.
 
 optim/get_optimizer.py
-```
+```py
 from torch.optim import Adam, SGD # add optimizers
 
 
@@ -199,7 +199,7 @@ def getOptimizer(args, model):
 ```
 
 optim/get_scheduler.py
-```
+```py
 from  torch.optim.lr_scheduler import StepLR # add schedulers
 
 
@@ -219,7 +219,7 @@ def getScheduler(args, optimizer):
 Currently, we support yacs as a configuration library. You can change default params and add your own configs in "config/defaults.py". Note that you cannot add parameters such as "_C.TRAIN.GPUS" in other files. All parameters should be defined in this file.
 
 config/defaults.py
-```
+```py
 from os.path import join
 
 from yacs.config import CfgNode
@@ -271,7 +271,7 @@ MLFLOW:
 Also, you can add constant values in "config/const.py"
 
 config/const.py
-```
+```py
 from os import sep
 from os.path import join, dirname, realpath
 
@@ -283,7 +283,7 @@ Currently we support MLFlow as an experiment manager and use PyTorch Lightning a
 Also, we offer logging stdout and saving config as mlflow's artifacts.
 
 train.py
-```
+```py
 from contextlib import redirect_stdout
 from shutil import rmtree
 
