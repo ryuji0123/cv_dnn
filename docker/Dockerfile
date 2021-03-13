@@ -1,4 +1,4 @@
-FROM pytorch/pytorch
+FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-devel
 
 # apt-get
 ENV DEBIAN_FRONTEND noninteractive
