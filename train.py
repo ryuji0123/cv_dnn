@@ -13,7 +13,12 @@ from data.dataset import get_dataset
 from models import get_model
 
 
-def main(args, args_file_path, tmp_results_dir, train_log_file_path):
+def main(
+    args,
+    args_file_path: str,
+    tmp_results_dir: str,
+    train_log_file_path: str,
+) -> None:
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     train_data_dict = get_dataset(args).train_data
