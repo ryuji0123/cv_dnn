@@ -7,7 +7,7 @@ from shutil import rmtree
 from mlflow.tracking.client import MlflowClient
 from pytorch_lightning.loggers import MLFlowLogger
 
-from config import updateArgs, parseConsole
+from config import update_args, parse_console
 from data import get_dataloader
 from data.dataset import get_dataset
 from models import get_model
@@ -67,8 +67,8 @@ def main(
 
 
 if __name__ == '__main__':
-    option = parseConsole()
-    args = updateArgs(cfg_file=option.cfg_file_path)
+    option = parse_console()
+    args = update_args(cfg_file=option.cfg_file_path)
     main(
         args=args,
         args_file_path=option.args_file_path,
