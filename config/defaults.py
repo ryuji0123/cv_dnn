@@ -29,8 +29,8 @@ _C.MLFLOW.EXPERIMENT_NAME = 'Default'
 _C.DATA = CfgNode()
 _C.DATA.CACHE_DIR = join(PROJECT_ROOT, '.data')
 _C.DATA.CLASSES = (
-        'plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'
-        )
+    'plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'
+)
 _C.DATA.DATASET_TYPE = 'cifer10'
 _C.DATA.INPUT_DIM = 3
 _C.DATA.NUM_WORKERS = 32
