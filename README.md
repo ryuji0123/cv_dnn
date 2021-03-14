@@ -8,15 +8,16 @@
 1. Install
 ```sh
 $ git clone git@github.com:ryuji0123/cv_dnn.git
-$ cd cv_dnn
-$ ./build_docker_image.sh
 ```
 
 2. Environment Setup
+The names of the docker image and container are specified by constants described in docker/env.sh.
+These constants can be edited to suit your project.
 ```sh
-$ ./build_docker_image.sh
-$ ./run_docker_container.sh
-$ ./exec_docker_container.sh
+$ cd cv_dnn
+$ sh docker/build.sh
+$ sh docker/run.sh
+$ sh docker/exec.sh
 ```
 
 4. Run Training Steps
