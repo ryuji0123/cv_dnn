@@ -6,30 +6,47 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 class CIFAR10Dataset:
 
-    def __init__(self, root, transform, val_size):
-        self.setTrainAndValData(
-                train=True, download=True, root=root, transform=transform, val_size=val_size
-                )
+    def __init__(self, root: str, transform, validation_size: float) -> None:
+        self.set_train_and_validation_data(
+            train=True, 
+            download=True,
+            root=root,
+            transform=transform,
+            validation_size=validation_size,
+        )
 
-        self.setTestData(
-                train=False, download=True, root=root, transform=transform
-                )
+        self.set_test_data(
+            train=False, download=True, root=root, transform=transform
+        )
 
-    def setTrainAndValData(self, download, root, train, transform, val_size):
+    def set_train_and_validation_data(
+        self,
+        download: bool,
+        root: str,
+        train: bool,
+        transform,
+        validation_size: float,
+    ) -> None:
         train_dataset = CIFAR10(download=download, root=root, train=train, transform=transform)
         train_num = len(train_dataset)
         indices = list(range(train_num))
-        split = int(np.floor(val_size * train_num))
+        split = int(np.floor(validation_size * train_num))
         train_indices, val_indices = indices[split:], indices[:split]
         self.train_data = {
-                'dataset': train_dataset,
-                'train_sampler': SubsetRandomSampler(train_indices),
-                'val_sampler': SubsetRandomSampler(val_indices),
-                }
+            'dataset': train_dataset,
+            'train_sampler': SubsetRandomSampler(train_indices),
+            'val_sampler': SubsetRandomSampler(val_indices),
+        }
 
-    def setTestData(self, download, root, train, transform):
+    def set_test_data(
+        self,
+        download: bool,
+        root: str,
+        train: bool,
+        transform,
+    ) -> None:
         self.test_data = {
-                'dataset': CIFAR10(
-                    download=download, root=root, train=train, transform=transform
-                    )
-                }
+            'dataset': CIFAR10(
+                download=download, root=root, train=train, transform=transform
+            )
+        }

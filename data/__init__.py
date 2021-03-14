@@ -1,4 +1,4 @@
-from data.get_data_loader import getDataLoader
+from data.get_dataloader import get_dataloader
 
 
-__all__ =  ['getDataLoader']
+__all__ =  ['get_dataloader']

@@ -8,46 +8,45 @@ from mlflow.tracking.client import MlflowClient
 from pytorch_lightning.loggers import MLFlowLogger
 
 from config import updateArgs, parseConsole
-from data import getDataLoader
-from data.dataset import getDataset
-from model import getModel
-from optim import getOptimizer, getScheduler
+from data import get_dataloader
+from data.dataset import get_dataset
+from models import get_model
 
 
 def main(args, args_file_path, tmp_results_dir, train_log_file_path):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    train_data_dict = getDataset(args).train_data
+    train_data_dict = get_dataset(args).train_data
 
-    train_data_loader = getDataLoader(
-            batch_size=args.TRAIN.BATCH_SIZE,
-            dataset=train_data_dict['dataset'],
-            num_workers=args.DATA.NUM_WORKERS,
-            sampler=train_data_dict['train_sampler']
-            )
+    train_data_loader = get_dataloader(
+        batch_size=args.TRAIN.BATCH_SIZE,
+        dataset=train_data_dict['dataset'],
+        num_workers=args.DATA.NUM_WORKERS,
+        sampler=train_data_dict['train_sampler']
+    )
 
-    val_data_loader = getDataLoader(
-            batch_size=args.TRAIN.BATCH_SIZE,
-            dataset=train_data_dict['dataset'],
-            num_workers=args.DATA.NUM_WORKERS,
-            sampler=train_data_dict['val_sampler']
-            )
+    val_data_loader = get_dataloader(
+        batch_size=args.TRAIN.BATCH_SIZE,
+        dataset=train_data_dict['dataset'],
+        num_workers=args.DATA.NUM_WORKERS,
+        sampler=train_data_dict['val_sampler']
+    )
 
-    model = getModel(
+    model = get_model(
         args=args,
         device=device,
-        ).to(device)
+    ).to(device)
 
     mlflow_logger = MLFlowLogger(
-            experiment_name=args.MLFLOW.EXPERIMENT_NAME,
-            )
+        experiment_name=args.MLFLOW.EXPERIMENT_NAME,
+    )
 
     trainer = pl.Trainer(
-            distributed_backend=args.TRAIN.DISTRIBUTED_BACKEND,
-            gpus=args.TRAIN.GPUS,
-            logger=mlflow_logger,
-            max_epochs=args.TRAIN.MAX_EPOCHS,
-            )
+        distributed_backend=args.TRAIN.DISTRIBUTED_BACKEND,
+        gpus=args.TRAIN.GPUS,
+        logger=mlflow_logger,
+        max_epochs=args.TRAIN.MAX_EPOCHS,
+    )
 
     try:
         trainer.fit(model, train_data_loader, val_data_loader)
@@ -59,15 +58,15 @@ def main(args, args_file_path, tmp_results_dir, train_log_file_path):
         mlflow_client = MlflowClient()
         mlflow_client.log_artifact(mlflow_logger.run_id, args_file_path)
         mlflow_client.log_artifact(mlflow_logger.run_id, train_log_file_path)
-        rmtree(tmp_results_dir)
+        rmtree(tmp_results_dir, ignore_errors=True)
 
 
 if __name__ == '__main__':
     option = parseConsole()
     args = updateArgs(cfg_file=option.cfg_file_path)
     main(
-            args=args,
-            args_file_path=option.args_file_path,
-            tmp_results_dir=option.tmp_results_dir,
-            train_log_file_path=option.train_log_file_path
-            )
+        args=args,
+        args_file_path=option.args_file_path,
+        tmp_results_dir=option.tmp_results_dir,
+        train_log_file_path=option.train_log_file_path
+    )

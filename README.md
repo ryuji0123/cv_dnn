@@ -40,7 +40,7 @@ Define your own models and add keys. Also, if you want to pass model-dependent h
 model/get_model.py
 ```py
 # add models
-from model.simple_cnn_model import SimpleCNNModel 
+from models.simple_cnn_model import SimpleCNNModel 
 
 
 def getModel(args, device):

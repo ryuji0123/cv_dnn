@@ -1,4 +1,4 @@
-from data.dataset.get_dataset import getDataset
+from data.dataset.get_dataset import get_dataset
 
 
-__all__ = ['getDataset']
+__all__ = ['get_dataset']

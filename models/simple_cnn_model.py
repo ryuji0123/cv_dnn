@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from pytorch_lightning import LightningModule
 
-from optim import getOptimizer, getScheduler
+from optim import get_optimizer, get_scheduler
 
 
 class SimpleCNNModel(LightningModule):
@@ -24,8 +24,8 @@ class SimpleCNNModel(LightningModule):
         self.fc3 = nn.Linear(84, out_channel)
 
     def configure_optimizers(self):
-        optimizer = getOptimizer(self.args, self)
-        scheduler = getScheduler(self.args, optimizer)
+        optimizer = get_optimizer(self.args, self)
+        scheduler = get_scheduler(self.args, optimizer)
 
         return [optimizer], [scheduler]
 
