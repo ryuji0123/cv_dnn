@@ -1,8 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-from collections import OrderedDict
-
 from pytorch_lightning import LightningModule
 
 from optim import get_optimizer, get_scheduler
