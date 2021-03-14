@@ -36,6 +36,7 @@ If you want to see train steps and its status with both stdout and mlflow, you c
 ## Components
 ### Models
 Define your model.
+
 model/get_model.py
 ```py
 from pytorch_lightning import LightningModule
