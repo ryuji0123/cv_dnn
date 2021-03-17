@@ -2,6 +2,7 @@ flake8==3.8.3
 mlflow==1.13.1
 numpy==1.19.2
 opencv-python==4.4.0.46
+optuna==2.6.0
 pandas==1.1.2
 pytest==6.0.2
 pytorch-lightning==1.2.1

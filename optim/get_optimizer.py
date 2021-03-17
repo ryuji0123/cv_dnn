@@ -1,13 +1,15 @@
-from torch.optim import Adam, SGD
+from pytorch_lightning import LightningModule
+from torch.optim import Adam, Optimizer, SGD
 
 
-def get_optimizer(args, model):
+def get_optimizer(args, model, lr: float = None) -> Optimizer:
     optimizer_type = args.TRAIN.OPTIMIZER_TYPE.lower()
+    lr = args.TRAIN.LR if lr is None else lr
 
     if optimizer_type == 'adam':
-        optimizer = Adam(model.parameters(), lr=args.TRAIN.LR)
+        optimizer = Adam(model.parameters(), lr=lr)
     elif optimizer_type == 'sgd':
-        optimizer = SGD(model.parameters(), lr=args.TRAIN.LR, momentum=args.TRAIN.MOMENTUM)
+        optimizer = SGD(model.parameters(), lr=lr, momentum=args.TRAIN.MOMENTUM)
     else:
         raise NotImplementedError()
 

@@ -31,11 +31,11 @@ class CIFAR10Dataset:
         train_num = len(train_dataset)
         indices = list(range(train_num))
         split = int(np.floor(validation_size * train_num))
-        train_indices, val_indices = indices[split:], indices[:split]
-        self.train_data = {
+        train_indices, validation_indices = indices[split:], indices[:split]
+        self.train_data_dict = {
             'dataset': train_dataset,
             'train_sampler': SubsetRandomSampler(train_indices),
-            'val_sampler': SubsetRandomSampler(val_indices),
+            'validation_sampler': SubsetRandomSampler(validation_indices),
         }
 
     def set_test_data(
@@ -45,7 +45,7 @@ class CIFAR10Dataset:
         train: bool,
         transform,
     ) -> None:
-        self.test_data = {
+        self.test_data_dict = {
             'dataset': CIFAR10(
                 download=download, root=root, train=train, transform=transform
             )

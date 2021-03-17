@@ -1,10 +1,13 @@
 import sys
 import traceback
 
+import optuna
 import pytorch_lightning as pl
 import torch
 
 from contextlib import redirect_stdout
+from datetime import datetime
+from os import makedirs
 from os.path import join
 from shutil import rmtree
 
@@ -16,14 +19,17 @@ from config import update_args, parse_console
 from data import get_dataloader
 from data.dataset import get_dataset
 from models import get_model
+from utils import fix_seed
 
 
-def main(
-    args,
-    args_file_path: str,
-    tmp_results_dir: str,
-    train_log_file_path: str,
-) -> None:
+def objective(trial, args, tmp_results_dir: str) -> float:
+    timestamp = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    cur_tmp_results_dir = join(tmp_results_dir, timestamp)
+    makedirs(cur_tmp_results_dir, exist_ok=True)
+
+    args_file_path = join(cur_tmp_results_dir, 'args.yaml')
+    train_log_file_path = join(cur_tmp_results_dir, 'log.txt')
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     train_data_dict = get_dataset(args).train_data_dict
@@ -45,8 +51,10 @@ def main(
     model = get_model(
         args=args,
         device=device,
+        trial=trial,
+        # if you want to decide hparams with trial, you don't need to write any values here. 
+        # This code decides learning rate with trial and record it in model's configure_optimizers method.
         hparams={
-            'learning rate': args.TRAIN.LR,
             'batch size': args.TRAIN.BATCH_SIZE,
         },
     ).to(device)
@@ -54,7 +62,7 @@ def main(
     mlflow_logger = MLFlowLogger(
         experiment_name=args.MLFLOW.EXPERIMENT_NAME,
     )
-    
+
     checkpoint_callback = ModelCheckpoint(monitor='validation_accuracy')
 
     trainer = pl.Trainer(
@@ -68,7 +76,10 @@ def main(
 
     try:
         exist_error = False
-        trainer.fit(model, train_data_loader, validation_data_loader)
+        print(f'To see training logs, you can check {train_log_file_path}')
+        with open(train_log_file_path, 'w') as f:
+            with redirect_stdout(f):
+                trainer.fit(model, train_data_loader, validation_data_loader)
     except Exception:
         run_id = mlflow_logger.run_id
         if run_id is not None:
@@ -87,22 +98,37 @@ def main(
             with open(args_file_path, 'w') as f:
                 with redirect_stdout(f):
                     print(args.dump())
-
             mlflow_client = MlflowClient()
             mlflow_client.log_artifact(run_id, args_file_path)
             mlflow_client.log_artifact(run_id, train_log_file_path)
             if exist_error:
                 mlflow_client.log_artifact(run_id, error_file_path)
-            rmtree(tmp_results_dir, ignore_errors=True)
+            rmtree(cur_tmp_results_dir, ignore_errors=True)
+
+    return checkpoint_callback.best_model_score
+
+
+def main(args, tmp_results_dir: str) -> None:
+    study = optuna.create_study(direction='maximize')
+    study.optimize(
+        lambda trial: objective(
+            trial, args, tmp_results_dir
+        ),
+        n_trials=args.OPTUNA.N_TRIALS,
+        timeout=args.OPTUNA.TIMEOUT,
+    )
+    trial = study.best_trial
+    print(f'Best trial value: {trial.value}')
+    print('Params')
+    for k, v in trial.params.items():
+        print(f'{k}: {v}')
 
 
 if __name__ == '__main__':
     option = parse_console()
     args = update_args(cfg_file=option.cfg_file_path)
+    fix_seed(args.SEED)
     main(
         args=args,
-        args_file_path=option.args_file_path,
         tmp_results_dir=option.tmp_results_dir,
-        train_log_file_path=option.train_log_file_path
     )
-    print('Finished training')
