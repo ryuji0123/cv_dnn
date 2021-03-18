@@ -34,14 +34,14 @@ def objective(trial, args, tmp_results_dir: str) -> float:
 
     train_data_dict = get_dataset(args).train_data_dict
 
-    train_data_loader = get_dataloader(
+    train_dataloader = get_dataloader(
         batch_size=args.TRAIN.BATCH_SIZE,
         dataset=train_data_dict['dataset'],
         num_workers=args.DATA.NUM_WORKERS,
         sampler=train_data_dict['train_sampler'],
     )
 
-    validation_data_loader = get_dataloader(
+    validation_dataloader = get_dataloader(
         batch_size=args.TRAIN.BATCH_SIZE,
         dataset=train_data_dict['dataset'],
         num_workers=args.DATA.NUM_WORKERS,
@@ -52,7 +52,7 @@ def objective(trial, args, tmp_results_dir: str) -> float:
         args=args,
         device=device,
         trial=trial,
-        # if you want to decide hparams with trial, you don't need to write any values here. 
+        # if you want to decide hparams with trial, you don't need to write any values here.
         # This code decides learning rate with trial and record it in model's configure_optimizers method.
         hparams={
             'batch size': args.TRAIN.BATCH_SIZE,
@@ -79,7 +79,7 @@ def objective(trial, args, tmp_results_dir: str) -> float:
         print(f'To see training logs, you can check {train_log_file_path}')
         with open(train_log_file_path, 'w') as f:
             with redirect_stdout(f):
-                trainer.fit(model, train_data_loader, validation_data_loader)
+                trainer.fit(model, train_dataloader, validation_dataloader)
     except Exception:
         run_id = mlflow_logger.run_id
         if run_id is not None:

@@ -28,14 +28,14 @@ def main(
 
     train_data_dict = get_dataset(args).train_data_dict
 
-    train_data_loader = get_dataloader(
+    train_dataloader = get_dataloader(
         batch_size=args.TRAIN.BATCH_SIZE,
         dataset=train_data_dict['dataset'],
         num_workers=args.DATA.NUM_WORKERS,
         sampler=train_data_dict['train_sampler'],
     )
 
-    validation_data_loader = get_dataloader(
+    validation_dataloader = get_dataloader(
         batch_size=args.TRAIN.BATCH_SIZE,
         dataset=train_data_dict['dataset'],
         num_workers=args.DATA.NUM_WORKERS,
@@ -54,7 +54,7 @@ def main(
     mlflow_logger = MLFlowLogger(
         experiment_name=args.MLFLOW.EXPERIMENT_NAME,
     )
-    
+
     checkpoint_callback = ModelCheckpoint(monitor='validation_accuracy')
 
     trainer = pl.Trainer(
@@ -68,7 +68,7 @@ def main(
 
     try:
         exist_error = False
-        trainer.fit(model, train_data_loader, validation_data_loader)
+        trainer.fit(model, train_dataloader, validation_dataloader)
     except Exception:
         run_id = mlflow_logger.run_id
         if run_id is not None:
