@@ -8,7 +8,7 @@ class CIFAR10Dataset:
 
     def __init__(self, root: str, transform, validation_size: float) -> None:
         self.set_train_and_validation_data(
-            train=True, 
+            train=True,
             download=True,
             root=root,
             transform=transform,
