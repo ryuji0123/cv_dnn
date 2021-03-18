@@ -7,7 +7,7 @@ def get_model(
     args,
     device: str,
     hparams: dict,
-    trial = None
+    trial=None,
 ) -> LightningModule:
     model_type = args.TRAIN.MODEL_TYPE.lower()
 

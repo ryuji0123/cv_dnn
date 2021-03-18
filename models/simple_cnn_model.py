@@ -25,7 +25,7 @@ class SimpleCNNModel(LightningModule):
         self.trial = trial
 
         self.cross_entropy_loss = nn.CrossEntropyLoss()
-        
+
         # forward
         self.conv1 = nn.Conv2d(in_channel, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
@@ -36,7 +36,7 @@ class SimpleCNNModel(LightningModule):
 
     def configure_optimizers(self) -> list:
         if self.trial is not None:
-            lr = self.trial.suggest_loguniform('optimizer_lr', 1e-5, 1e-1) 
+            lr = self.trial.suggest_loguniform('optimizer_lr', 1e-5, 1e-1)
             self.logger.log_hyperparams({'optimizer_lr': lr})
         else:
             lr = self.args.TRAIN.LR
@@ -57,7 +57,7 @@ class SimpleCNNModel(LightningModule):
 
     def training_step(self, batch, batch_idx):
         inputs, labels = batch
-        
+
         outputs = self(inputs)
 
         accuracy = (outputs.argmax(1) == labels).sum().item()
@@ -82,13 +82,13 @@ class SimpleCNNModel(LightningModule):
             'training_loss': loss / count,
         }
 
-        self.logger.log_metrics(results,step=self.current_epoch)
+        self.logger.log_metrics(results, step=self.current_epoch)
 
         return None
 
     def validation_step(self, batch, batch_idx):
         inputs, labels = batch
-        
+
         outputs = self(inputs)
 
         accuracy = (outputs.argmax(1) == labels).sum().item()
@@ -113,6 +113,6 @@ class SimpleCNNModel(LightningModule):
             'validation_loss': loss / count,
         }
 
-        self.logger.log_metrics(results,step=self.current_epoch)
+        self.logger.log_metrics(results, step=self.current_epoch)
 
         return results
