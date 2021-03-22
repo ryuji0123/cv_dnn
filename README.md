@@ -11,6 +11,7 @@ $ git clone git@github.com:ryuji0123/cv_dnn.git
 ```
 
 2. Environment Setup
+
 The names of the docker image and container are specified by constants described in docker/env.sh.
 These constants can be edited to suit your project.
 ```sh
