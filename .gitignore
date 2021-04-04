@@ -3,6 +3,7 @@
 lightning_logs/
 mlruns/
 .tmp_results/
+docker/env_dev.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
