@@ -28,9 +28,8 @@ $ sh nohup_train.sh
 If you want to stop seeing stdout without breaking train steps, you can just press ctrl+c. The above shell uses nohup and run python script in background, you don't pay attention to how to avoid intrupting train steps. See Logger / Trainer module in detail.
 
 5. See Results
-```sh
-$ sh app_ml.sh
-```
+You can use MLflow to check the results of your experiment. 
+Access http://localhost:5000/ from your browser. If necessary, you can edit docker/env.sh to change the port.
 If you want to see train steps and its status with both stdout and mlflow, you can use tmux. We install it in docker image.
 
 
