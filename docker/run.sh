@@ -8,7 +8,7 @@ docker run \
   -dit \
   --gpus all \
   -v $PWD:/workspace \
-  -p $HOST_PORT:$CONTAINER_PORT \
+  -p $MLFLOW_HOST_PORT:$MLFLOW_CONTAINER_PORT \
   --name $CONTAINER_NAME\
   --rm \
   --shm-size=2g \
