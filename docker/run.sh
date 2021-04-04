@@ -14,5 +14,5 @@ docker run \
   --shm-size=2g \
   $IMAGE_NAME
 docker exec \
-  -dit \
+  -d \
   $CONTAINER_NAME sh /workspace/docker/init.sh
