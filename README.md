@@ -1,4 +1,10 @@
 # Sample DNN Repository for Computer Vision
+[![GitHub license](https://img.shields.io/github/license/ryuji0123/cv_dnn)](https://github.com/ryuji0123/cv_dnn/blob/main/LICENSE)
+![GitHub repo size](https://img.shields.io/github/repo-size/ryuji0123/cv_dnn)
+![GitHub Repo stars](https://img.shields.io/github/stars/ryuji0123/cv_dnn?style=social)
+![GitHub issues](https://img.shields.io/github/issues/ryuji0123/cv_dnn)
+
+
 ## Dependencies
 - Driver Version: 430.26
 - CUDA Version: 10.2
